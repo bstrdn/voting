@@ -14,4 +14,11 @@ public class AbstractBaseEntity {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     @Column(name = "id", unique = true, nullable = false, columnDefinition = "integer default nextval('global_seq')")
     private Integer id;
+
+    protected AbstractBaseEntity() {
+    }
+
+    protected AbstractBaseEntity(Integer id) {
+        this.id = id;
+    }
 }
