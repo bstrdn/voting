@@ -15,7 +15,7 @@ public class AbstractNamedEntity extends AbstractBaseEntity {
 
     @Getter
     @Setter
-    @NotBlank
+//    @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false)
 //    @SafeHtml(groups = {View.Web.class}, whitelistType = NONE)

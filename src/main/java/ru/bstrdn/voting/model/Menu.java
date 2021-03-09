@@ -14,26 +14,26 @@ import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
-@Entity
-public class Menu extends AbstractBaseEntity {
+//@Entity
+public class Menu  {
 
-    @Getter
-    @Column(name = "created", nullable = false, columnDefinition = "timestamp default now()")
-    @NotNull
-    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
-    private final Date created = new Date();
-
-    @Getter
-    @Setter
-    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
-    @JsonManagedReference
-    private Set<Dish> dishes;
-
-    @Getter
-    @Setter
-    @ManyToOne
-    @JoinColumn(name = "restaurant_id", nullable = false)
-    @OnDelete(action = OnDeleteAction.CASCADE)
-    @JsonBackReference
-    private Restaurant restaurant;
+//    @Getter
+//    @Column(name = "created", nullable = false, columnDefinition = "timestamp default now()")
+//    @NotNull
+//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
+//    private final Date created = new Date();
+//
+//    @Getter
+//    @Setter
+//    @OneToMany(mappedBy = "menu", fetch = FetchType.EAGER)
+//    @JsonManagedReference
+//    private Set<Dish> dishes;
+//
+//    @Getter
+//    @Setter
+//    @ManyToOne
+//    @JoinColumn(name = "restaurant_id", nullable = false)
+//    @OnDelete(action = OnDeleteAction.CASCADE)
+//    @JsonBackReference
+//    private Restaurant restaurant;
 }
