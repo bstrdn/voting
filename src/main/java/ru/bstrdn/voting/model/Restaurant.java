@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -14,6 +15,7 @@ import java.util.Set;
 
 @Entity
 @Data
+@NoArgsConstructor
 public class Restaurant extends AbstractNamedEntity {
 
     @Getter
@@ -22,4 +24,8 @@ public class Restaurant extends AbstractNamedEntity {
 //    @OneToMany(mappedBy = "restaurant", fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Dish> dishes;
+
+    public Restaurant(Integer id) {
+        super(id);
+    }
 }

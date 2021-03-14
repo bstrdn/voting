@@ -2,16 +2,23 @@ package ru.bstrdn.voting.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.bstrdn.voting.model.Dish;
 import ru.bstrdn.voting.model.Restaurant;
-import ru.bstrdn.voting.repository.CredDishRepository;
+import ru.bstrdn.voting.repository.CrudDishRepository;
 import ru.bstrdn.voting.repository.CrudRestaurantRepository;
+import ru.bstrdn.voting.service.AdminService;
+import ru.bstrdn.voting.util.ValidList;
+import ru.bstrdn.voting.util.exception.NotFoundException;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
@@ -19,24 +26,16 @@ import java.util.List;
 @RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class AdminRestController {
-    static final String REST_URL = "/rest/admin/restaurant";
+    static final String REST_URL = "/rest/restaurant/admin";
 
+    @Autowired
+    CrudDishRepository dishRepository;
     @Autowired
     CrudRestaurantRepository restaurantRepository;
     @Autowired
-    CredDishRepository dishRepository;
+    AdminService adminService;
 
-    @GetMapping("/{id}")
-    public Restaurant get(@PathVariable int id) {
-        return restaurantRepository.findById(id).orElse(null);
-    }
-
-    @GetMapping
-    public List<Restaurant> getAll() {
-        return restaurantRepository.findAll();
-    }
-
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
         Restaurant created = restaurantRepository.save(restaurant);
         List<Dish> dishList = restaurant.getDishes();
@@ -49,10 +48,27 @@ public class AdminRestController {
     }
 
     @PostMapping(value = "/setmenu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Restaurant> setMenu(@RequestBody List<Dish> menu) {
-        dishRepository.saveAll(menu);
-        return null;
+//    @ResponseStatus(HttpStatus.OK)
+    public List<Dish> setMenu(@Valid @RequestBody ValidList<Dish> menu, BindingResult result) {
+
+        if (result.hasErrors()) {
+            throw new NotFoundException(0, result.getFieldError().getDefaultMessage());
+        }
+            return adminService.saveAll(menu);
     }
+//
+//    @PostMapping(value = "/setmenu", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseStatus(HttpStatus.OK)
+//    public List<Dish> setMenu(@Valid @RequestBody List<Dish> menu, BindingResult result) {
+//
+//        if(result.hasErrors()) {
+//            System.out.println("error");
+//        } else {
+//
+//            List<Dish> list = adminService.saveAll(menu);
+//            return list;
+//        }
+//return null;
+//    }
 
 }

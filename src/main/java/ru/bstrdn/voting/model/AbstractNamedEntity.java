@@ -15,13 +15,16 @@ public class AbstractNamedEntity extends AbstractBaseEntity {
 
     @Getter
     @Setter
-//    @NotBlank
     @Size(min = 2, max = 100)
     @Column(name = "name", nullable = false)
 //    @SafeHtml(groups = {View.Web.class}, whitelistType = NONE)
     protected String name;
 
     protected AbstractNamedEntity() {
+    }
+
+    protected AbstractNamedEntity(Integer id) {
+        super(id);
     }
 
     protected AbstractNamedEntity(Integer id, String name) {

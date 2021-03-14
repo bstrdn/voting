@@ -1,7 +1,7 @@
 #### create Restaurant with lunch menu of the day
 `curl -s -X POST -d '{"name": "first","dishes":[{"name": "breakfast","price":100},{"name":"dinner","price": 200}]}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurant`
 
-
+`curl -s http://localhost:8080/rest/user/vote/1 --user user0@ya.ru:p`
 
 #### get All Users
 `curl -s http://localhost:8080/topjava/rest/admin/users --user admin@gmail.com:admin`
