@@ -24,13 +24,10 @@ public class UserService {
 
     public Vote toVote(int id, MyUserDetails userDetails) {
 
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
-        if (Objects.isNull(restaurant)) {
-            throw new NotFoundException(id, "Restaurant not found");
-        }
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, "Restaurant not found"));
 
         LocalTime localTime = LocalTime.now();
-
         User user = userDetails.getUser();
         Vote todayVote = voteRepository.getTodayVote(user.getId());
 
@@ -42,5 +39,12 @@ public class UserService {
             return voteRepository.save(todayVote);
         }
         throw new NotFoundException(id, "Already voted");
+    }
+
+    public Restaurant getRestaurant(int id) {
+
+        Restaurant restaurant = restaurantRepository.getWithoutDishes(id);
+
+        return restaurant;
     }
 }

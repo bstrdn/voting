@@ -7,34 +7,36 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import java.util.Date;
 
+@Getter
+@Setter
 @Entity
 @NoArgsConstructor
 public class Vote extends AbstractBaseEntity {
 
-    @Getter
-    @Setter
-    @ManyToOne
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
     User user;
 
-    @Getter
-    @Setter
-    @ManyToOne
+    //todo delete
+//    @Column(name="user_id", updatable = false, insertable = false)
+//    private Integer user_fk;
+
+    @ManyToOne(targetEntity = Restaurant.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
     Restaurant restaurant;
 
-    @Getter
-    @Setter
+    //todo delete
+//    @Column(name="restaurant_id", updatable=false, insertable=false)
+//    private Integer restaurant_fk;
+
+
     @Column(name = "voted")
     private Date voted = new Date();
 

@@ -28,10 +28,11 @@ public class UserRestController {
 
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
-        Restaurant restaurant = restaurantRepository.findById(id).orElse(null);
-        if (Objects.isNull(restaurant)) {
-            throw new NotFoundException(id, "Restaurant not found");
-        }
+
+//        Restaurant restaurant3 = userService.getRestaurant(id);
+
+        Restaurant restaurant = restaurantRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(id, "Restaurant not found"));
         log.info("getAll");
         return restaurant;
     }
@@ -45,6 +46,4 @@ public class UserRestController {
     public Vote vote(@AuthenticationPrincipal MyUserDetails userDetails, @PathVariable int id) {
             return userService.toVote(id, userDetails);
     }
-
-
 }

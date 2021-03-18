@@ -7,6 +7,8 @@ import org.springframework.validation.BindException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+
+
 import javax.servlet.http.HttpServletRequest;
 
 @ControllerAdvice
@@ -18,13 +20,5 @@ public class GlobalExceptionHandler {
         log.error("{} (id: {})", e.getMessage(), e.getIdResource());
         Response response = new Response(e.getIdResource(), e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
-    }
-
-
-    @ExceptionHandler(BindException.class)
-    public ResponseEntity<Response> bindValidationError(HttpServletRequest req, BindException e) {
-        String[] details;
-        System.out.println(" ");
-        return null;
     }
 }

@@ -12,5 +12,4 @@ import java.util.List;
 public interface CrudVoteRepository extends JpaRepository<Vote, Integer> {
     @Query("SELECT v from Vote v WHERE v.user.id=:userId AND v.voted >= current_date")
     Vote getTodayVote(@Param("userId") int userId);
-
 }
