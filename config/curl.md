@@ -1,39 +1,12 @@
+
+
+
+### curl samples
 #### create Restaurant with lunch menu of the day
-`curl -s -X POST -d '{"name": "first","dishes":[{"name": "breakfast","price":100},{"name":"dinner","price": 200}]}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/admin/restaurant`
+'curl -s -X POST -d '{"name": "first","dishes":[{"name": "breakfast","price":100},{"name":"dinner","price": 200}]}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/restaurant/admin/add --user admin3@ya.ru:p'
 
-`curl -s http://localhost:8080/rest/user/vote/1 --user user0@ya.ru:p`
+#### add lunch menu of the day to Restaurant
+'curl -s -X POST -d '[{"name": "borscht","price": 100,"restaurant":{"id":1005}},{"name": "pancakes","price": 1000,"restaurant":{"id":1005}}]' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/restaurant/admin/setmenu --user admin3@ya.ru:p ####restaurant vote curl -s -X POST -d -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/restaurant/1005 --user user0@ya.ru:p'
 
-#### get All Users
-`curl -s http://localhost:8080/topjava/rest/admin/users --user admin@gmail.com:admin`
-
-#### get Users 100001
-`curl -s http://localhost:8080/topjava/rest/admin/users/100001 --user admin@gmail.com:admin`
-
-#### register Users
-`curl -s -i -X POST -d '{"name":"New User","email":"test@mail.ru","password":"test-password"}' -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/topjava/rest/profile/register`
-
-#### get Profile
-`curl -s http://localhost:8080/topjava/rest/profile --user test@mail.ru:test-password`
-
-#### get All Meals
-`curl -s http://localhost:8080/topjava/rest/profile/meals --user user@yandex.ru:password`
-
-#### get Meals 100003
-`curl -s http://localhost:8080/topjava/rest/profile/meals/100003  --user user@yandex.ru:password`
-
-#### filter Meals
-`curl -s "http://localhost:8080/topjava/rest/profile/meals/filter?startDate=2020-01-30&startTime=07:00:00&endDate=2020-01-31&endTime=11:00:00" --user user@yandex.ru:password`
-
-#### get Meals not found
-`curl -s -v http://localhost:8080/topjava/rest/profile/meals/100008 --user user@yandex.ru:password`
-
-#### delete Meals
-`curl -s -X DELETE http://localhost:8080/topjava/rest/profile/meals/100002 --user user@yandex.ru:password`
-
-
-#### update Meals
-`curl -s -X PUT -d '{"dateTime":"2020-01-30T07:00", "description":"Updated breakfast", "calories":200}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/profile/meals/100003 --user user@yandex.ru:password`
-
-#### validate with Error
-`curl -s -X POST -d '{}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/admin/users --user admin@gmail.com:admin`
-`curl -s -X PUT -d '{"dateTime":"2015-05-30T07:00"}' -H 'Content-Type: application/json' http://localhost:8080/topjava/rest/profile/meals/100003 --user user@yandex.ru:password`
+#### voting for a restaurant
+'curl -s -X POST -d -H 'Content-Type:application/json;charset=UTF-8' http://localhost:8080/rest/restaurant/1006 --user user1@ya.ru:p'

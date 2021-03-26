@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ru.bstrdn.voting.model.Dish;
@@ -13,6 +14,7 @@ import ru.bstrdn.voting.model.Restaurant;
 import ru.bstrdn.voting.repository.CrudDishRepository;
 import ru.bstrdn.voting.repository.CrudRestaurantRepository;
 import ru.bstrdn.voting.util.ValidList;
+import ru.bstrdn.voting.util.exception.IncorrectDataException;
 import ru.bstrdn.voting.util.exception.NotFoundException;
 
 import javax.validation.Valid;
@@ -51,8 +53,17 @@ public class AdminRestController {
     public List<Dish> setMenu(@Valid @RequestBody ValidList<Dish> menu, BindingResult result) {
 
         if (result.hasErrors()) {
-            throw new NotFoundException(0, Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
+            StringBuilder e = new StringBuilder();
+            for (ObjectError err : result.getAllErrors()) {
+                e.append(err.getDefaultMessage() + ". ");
+            }
+            throw new IncorrectDataException(e.toString());
         }
-            return dishRepository.saveAll(menu);
+        try {
+            List<Dish> dishList = dishRepository.saveAll(menu);
+            return dishList;
+        } catch (Exception e) {
+            throw new NotFoundException(404, "Ресторан не найден");
+        }
     }
 }

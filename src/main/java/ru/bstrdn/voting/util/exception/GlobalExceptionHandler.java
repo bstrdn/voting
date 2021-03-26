@@ -21,4 +21,11 @@ public class GlobalExceptionHandler {
         Response response = new Response(e.getIdResource(), e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(IncorrectDataException.class)
+    public ResponseEntity<Response> incorrectDataException(IncorrectDataException e) {
+        log.error(e.getMessage());
+        Response response = new Response(400, e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
 }

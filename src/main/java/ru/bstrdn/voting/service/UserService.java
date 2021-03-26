@@ -8,6 +8,7 @@ import ru.bstrdn.voting.model.User;
 import ru.bstrdn.voting.model.Vote;
 import ru.bstrdn.voting.repository.CrudRestaurantRepository;
 import ru.bstrdn.voting.repository.CrudVoteRepository;
+import ru.bstrdn.voting.util.exception.IncorrectDataException;
 import ru.bstrdn.voting.util.exception.NotFoundException;
 
 import java.time.LocalTime;
@@ -38,13 +39,13 @@ public class UserService {
             todayVote.setVoted(new Date());
             return voteRepository.save(todayVote);
         }
-        throw new NotFoundException(id, "Already voted");
+        throw new IncorrectDataException("Already voted");
     }
 
     public Restaurant getRestaurant(int id) {
 
-        Restaurant restaurant = restaurantRepository.getWithoutDishes(id);
+//        Restaurant restaurant = restaurantRepository.getWithoutDishes(id);
 
-        return restaurant;
+        return null;
     }
 }

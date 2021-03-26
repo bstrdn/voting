@@ -29,8 +29,6 @@ public class UserRestController {
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
 
-//        Restaurant restaurant3 = userService.getRestaurant(id);
-
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id, "Restaurant not found"));
         log.info("getAll");

@@ -21,8 +21,8 @@ public class Dish extends AbstractNamedEntity {
 //    todo change message
     @Getter
     @Setter
-    @Min(value = 10, message = "МАЛО")
-    @Max(value = 1000, message = "МНОГО")
+    @Min(value = 10, message = "Ошибка: цена должна быть больше 10")
+    @Max(value = 10000, message = "Ошибка: цена должна быть меньше 10000")
 //    @Range(min = 10, max = 1000, message = "НЕ ПРАВИЛЬНОЕ ЧИСЛО")
     @Column(name = "price", nullable = false)
     private int price;
@@ -38,6 +38,7 @@ public class Dish extends AbstractNamedEntity {
 
     @Getter
     @Setter
+    @NotNull(message = "Обязательно должен быть ресторан")
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     @JsonBackReference
