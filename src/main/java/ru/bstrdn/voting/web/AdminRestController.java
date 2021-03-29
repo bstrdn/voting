@@ -2,6 +2,7 @@ package ru.bstrdn.voting.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +15,7 @@ import ru.bstrdn.voting.model.Restaurant;
 import ru.bstrdn.voting.repository.CrudDishRepository;
 import ru.bstrdn.voting.repository.CrudRestaurantRepository;
 import ru.bstrdn.voting.util.ValidList;
+import ru.bstrdn.voting.util.ValidationUtil;
 import ru.bstrdn.voting.util.exception.IncorrectDataException;
 import ru.bstrdn.voting.util.exception.NotFoundException;
 
@@ -35,8 +37,13 @@ public class AdminRestController {
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
+        ValidationUtil.checkNew(restaurant);
         if (result.hasErrors()) {
-            throw new NotFoundException(0, Objects.requireNonNull(result.getFieldError()).getDefaultMessage());
+            StringBuilder e = new StringBuilder();
+            for (ObjectError err : result.getAllErrors()) {
+                e.append(err.getDefaultMessage() + ". ");
+            }
+            throw new NotFoundException(404, e.toString());
         }
         Restaurant created = restaurantRepository.save(restaurant);
         List<Dish> dishList = restaurant.getDishes();
@@ -48,6 +55,7 @@ public class AdminRestController {
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
 
+    @CacheEvict(cacheNames = "restaurant", allEntries = true)
     @PostMapping(value = "/setmenu", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public List<Dish> setMenu(@Valid @RequestBody ValidList<Dish> menu, BindingResult result) {

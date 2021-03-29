@@ -2,6 +2,7 @@ package ru.bstrdn.voting.web;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,7 @@ public class UserRestController {
     @Autowired
     CrudRestaurantRepository restaurantRepository;
 
+    @Cacheable(cacheNames = "restaurant")
     @GetMapping("/{id}")
     public Restaurant get(@PathVariable int id) {
 
@@ -35,6 +37,7 @@ public class UserRestController {
         return restaurant;
     }
 
+    @Cacheable(cacheNames = "restaurants")
     @GetMapping
     public List<Restaurant> getAll() {
         return restaurantRepository.findAll();

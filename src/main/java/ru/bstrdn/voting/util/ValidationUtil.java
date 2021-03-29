@@ -1,6 +1,8 @@
 package ru.bstrdn.voting.util;
 
+import ru.bstrdn.voting.model.HasId;
 import ru.bstrdn.voting.model.Restaurant;
+import ru.bstrdn.voting.util.exception.IllegalRequestDataException;
 
 //todo realize
 public class ValidationUtil {
@@ -10,8 +12,9 @@ public class ValidationUtil {
         return object;
     }
 
-    public static Restaurant check(){
-
-        return null;
+    public static void checkNew(HasId bean) {
+        if (!bean.isNew()) {
+            throw new IllegalRequestDataException(bean + " must be new (id=null)");
+        }
     }
 }

@@ -41,11 +41,4 @@ public class UserService {
         }
         throw new IncorrectDataException("Already voted");
     }
-
-    public Restaurant getRestaurant(int id) {
-
-//        Restaurant restaurant = restaurantRepository.getWithoutDishes(id);
-
-        return null;
-    }
 }

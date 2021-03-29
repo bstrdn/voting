@@ -6,14 +6,15 @@ spring:
     properties:
       hibernate:
         format_sql: true
-
+        jdbc:
+          batch_size:  10
+      cache:
+        use_second_level_cache: true
+        region.factory_class: jcache
+        use_query_cache: true
 
   datasource:
     url: jdbc:h2:mem:voting
     username: sa
     password:
     h2.console.enabled: true
-
-
-server:
-  port: 8080

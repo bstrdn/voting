@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @MappedSuperclass
 @Data
-public class AbstractBaseEntity {
+public class AbstractBaseEntity implements HasId {
     public static final int START_SEQ = 1000;
 
     @Id
