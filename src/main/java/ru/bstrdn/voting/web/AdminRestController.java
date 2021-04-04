@@ -15,14 +15,12 @@ import ru.bstrdn.voting.model.Restaurant;
 import ru.bstrdn.voting.repository.CrudDishRepository;
 import ru.bstrdn.voting.repository.CrudRestaurantRepository;
 import ru.bstrdn.voting.util.ValidList;
-import ru.bstrdn.voting.util.ValidationUtil;
 import ru.bstrdn.voting.util.exception.IncorrectDataException;
 import ru.bstrdn.voting.util.exception.NotFoundException;
 
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -37,7 +35,6 @@ public class AdminRestController {
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
-        ValidationUtil.checkNew(restaurant);
         if (result.hasErrors()) {
             StringBuilder e = new StringBuilder();
             for (ObjectError err : result.getAllErrors()) {
