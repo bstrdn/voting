@@ -1,44 +1,38 @@
 package ru.bstrdn.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
-import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.validation.constraints.*;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
 public class Dish extends AbstractNamedEntity {
 
-//    todo change message
     @Getter
     @Setter
-    @Min(value = 10, message = "Ошибка: цена должна быть больше 10")
-    @Max(value = 10000, message = "Ошибка: цена должна быть меньше 10000")
-//    @Range(min = 10, max = 1000, message = "НЕ ПРАВИЛЬНОЕ ЧИСЛО")
+    @Min(value = 10, message = "Error: the price should be higher 10")
+    @Max(value = 10000, message = "Error: the price should be less 10000")
     @Column(name = "price", nullable = false)
     private int price;
 
     @Getter
     @Column(name = "added", nullable = false, columnDefinition = "timestamp default now()")
-//    @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date added = new Date();
 
-//    @Getter
-//    @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
-//    private boolean enabled = true;
 
     @Getter
     @Setter
-    @NotNull(message = "Обязательно должен быть ресторан")
+    @NotNull(message = "Error: There must be a restaurant")
     @ManyToOne
     @JoinColumn(name = "restaurant_id", nullable = false)
     @JsonBackReference

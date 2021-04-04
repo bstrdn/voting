@@ -56,6 +56,3 @@ create table VOTE
         foreign key (USER_ID) references USERS (ID)
             on delete cascade
 );
-//todo index
--- create unique index vote_voted_idx
---     on VOTE(TRUNC(TIMESTAMPADD(VOTED)));

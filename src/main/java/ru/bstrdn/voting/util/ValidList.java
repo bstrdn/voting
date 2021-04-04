@@ -23,7 +23,9 @@ public class ValidList<T> extends ForwardingList<T> {
         return list;
     }
 
-    /** Exposed for the {@link javax.validation.Validator} to access the list path */
+    /**
+     * Exposed for the {@link javax.validation.Validator} to access the list path
+     */
     public List<T> getList() {
         return list;
     }

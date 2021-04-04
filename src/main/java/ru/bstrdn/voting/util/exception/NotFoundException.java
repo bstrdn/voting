@@ -3,8 +3,6 @@ package ru.bstrdn.voting.util.exception;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.function.Supplier;
-
 @Getter
 @Setter
 public class NotFoundException extends RuntimeException {

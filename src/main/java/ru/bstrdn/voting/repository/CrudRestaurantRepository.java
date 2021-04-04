@@ -9,7 +9,4 @@ import java.util.List;
 
 public interface CrudRestaurantRepository extends JpaRepository<Restaurant, Integer> {
 
-//    @Query("SELECT r.id, r.name from Restaurant r")
-//    List<Restaurant> getAllWithMenuDay(LocalDate date);
-//    Restaurant getWithoutDishes(int id);
 }

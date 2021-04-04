@@ -9,5 +9,4 @@ class VotingApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

@@ -22,20 +22,11 @@ public class Vote extends AbstractBaseEntity {
     @JsonBackReference
     User user;
 
-    //todo delete
-//    @Column(name="user_id", updatable = false, insertable = false)
-//    private Integer user_fk;
-
     @ManyToOne(targetEntity = Restaurant.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
     @OnDelete(action = OnDeleteAction.CASCADE)
     @JsonBackReference
     Restaurant restaurant;
-
-    //todo delete
-//    @Column(name="restaurant_id", updatable=false, insertable=false)
-//    private Integer restaurant_fk;
-
 
     @Column(name = "voted")
     private Date voted = new Date();

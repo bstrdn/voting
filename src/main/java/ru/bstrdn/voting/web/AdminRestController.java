@@ -63,7 +63,7 @@ public class AdminRestController {
             List<Dish> dishList = dishRepository.saveAll(menu);
             return dishList;
         } catch (Exception e) {
-            throw new NotFoundException(404, "Ресторан не найден");
+            throw new NotFoundException(404, "Restaurant not found");
         }
     }
 }

@@ -13,7 +13,6 @@ import ru.bstrdn.voting.service.UserService;
 import ru.bstrdn.voting.util.exception.NotFoundException;
 
 import java.util.List;
-import java.util.Objects;
 
 @RestController
 @RequestMapping(value = UserRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -42,6 +41,6 @@ public class UserRestController {
 
     @PostMapping("/{id}")
     public Vote vote(@AuthenticationPrincipal MyUserDetails userDetails, @PathVariable int id) {
-            return userService.toVote(id, userDetails);
+        return userService.toVote(id, userDetails);
     }
 }
