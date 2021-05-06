@@ -1,4 +1,4 @@
-package ru.bstrdn.voting.config;
+package ru.bstrdn.voting.security;
 
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,12 +9,12 @@ import ru.bstrdn.voting.model.User;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class MyUserDetails implements UserDetails {
+public class UserDetailsImpl implements UserDetails {
 
     @Getter
     private User user;
 
-    public MyUserDetails(User user) {
+    public UserDetailsImpl(User user) {
         this.user = user;
     }
 

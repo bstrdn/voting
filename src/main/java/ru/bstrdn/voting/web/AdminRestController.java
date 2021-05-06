@@ -35,6 +35,8 @@ public class AdminRestController {
 
     @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
+        // TODO: 05.05.2021 refactoring log
+        log.info("create");
         if (result.hasErrors()) {
             StringBuilder e = new StringBuilder();
             for (ObjectError err : result.getAllErrors()) {
@@ -56,6 +58,7 @@ public class AdminRestController {
     @PostMapping(value = "/setmenu", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     public List<Dish> setMenu(@Valid @RequestBody ValidList<Dish> menu, BindingResult result) {
+        log.info("set menu");
 
         if (result.hasErrors()) {
             StringBuilder e = new StringBuilder();

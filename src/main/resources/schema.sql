@@ -1,58 +1,58 @@
-DROP TABLE IF EXISTS VOTE;
-DROP TABLE IF EXISTS USER_ROLE;
-DROP TABLE IF EXISTS USERS;
-DROP TABLE IF EXISTS DISH;
-DROP TABLE IF EXISTS RESTAURANT;
+DROP TABLE IF EXISTS vote;
+DROP TABLE IF EXISTS user_role;
+DROP TABLE IF EXISTS users;
+DROP TABLE IF EXISTS dish;
+DROP TABLE IF EXISTS restaurant;
 DROP SEQUENCE IF EXISTS global_seq;
 
 CREATE SEQUENCE global_seq START WITH 1000;
 
-create table USERS
+create TABLE users
 (
-    ID       INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
-    NAME     VARCHAR(100)                          not null,
-    EMAIL    VARCHAR(100)                          not null,
-    ENABLED  BOOL    default TRUE                  not null,
-    PASSWORD VARCHAR(100)                          not null
+    id       INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
+    name     VARCHAR(100)                          NOT NULL,
+    email    VARCHAR(100)                          NOT NULL,
+    enabled  BOOL    DEFAULT TRUE                  NOT NULL,
+    password VARCHAR(100)                          NOT NULL
 );
 CREATE UNIQUE INDEX users_unique_email_idx ON users (email);
 
 
-create table USER_ROLE
+create TABLE user_role
 (
-    USER_ID INTEGER                                not null,
-    ROLE    VARCHAR(255),
+    user_id INTEGER                                NOT NULL,
+    role    VARCHAR(255),
     CONSTRAINT user_roles_idx UNIQUE (user_id, role),
     FOREIGN KEY (user_id) REFERENCES users (id) ON DELETE CASCADE
 );
 
-create table RESTAURANT
+CREATE TABLE restaurant
 (
-    ID   INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
-    NAME VARCHAR(100)                          not null
+    id   INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
+    name VARCHAR(100)                          NOT NULL
 );
 
-create table DISH
+CREATE TABLE dish
 (
-    ID   INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
-    NAME          VARCHAR(100)                            not null,
-    ADDED         TIMESTAMP default NOW()                 not null,
-    PRICE         INTEGER                                 not null,
-    RESTAURANT_ID INTEGER                                 not null,
-    constraint restaurant_id_idx
-        foreign key (RESTAURANT_ID) references RESTAURANT (ID) ON DELETE CASCADE
+    id   INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
+    name          VARCHAR(100)                            NOT NULL,
+    added         TIMESTAMP default NOW()                 NOT NULL,
+    price         INTEGER                                 NOT NULL,
+    restaurant_id INTEGER                                 NOT NULL,
+    CONSTRAINT restaurant_id_idx
+        FOREIGN KEY (restaurant_id) REFERENCES restaurant (id) ON DELETE CASCADE
 );
 
-create table VOTE
+CREATE TABLE vote
 (
-    ID  INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
-    RESTAURANT_ID INTEGER,
-    VOTED         TIMESTAMP,
-    USER_ID       INTEGER                               not null,
-    constraint restaurant_id_idx_2
-        foreign key (RESTAURANT_ID) references RESTAURANT (ID)
-            on delete cascade,
-    constraint user_id_idx
-        foreign key (USER_ID) references USERS (ID)
-            on delete cascade
+    id  INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
+    restaurant_id INTEGER,
+    voted         TIMESTAMP,
+    user_id       INTEGER                               NOT NULL,
+    CONSTRAINT restaurant_id_idx_2
+        FOREIGN KEY (restaurant_id) REFERENCES restaurant (id)
+            ON DELETE CASCADE,
+    CONSTRAINT user_id_idx
+        FOREIGN KEY (user_id) REFERENCES users (id)
+            ON DELETE CASCADE
 );

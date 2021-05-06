@@ -9,12 +9,12 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@ToString
+
 @MappedSuperclass
+@Getter
+@Setter
 public class AbstractNamedEntity extends AbstractBaseEntity {
 
-    @Getter
-    @Setter
     @NotNull(message = "Error: Name must not be null")
     @Size(min = 2, max = 100, message = "Error: Name must be between 2 and 100 characters")
     @Column(name = "name", nullable = false)
@@ -30,4 +30,8 @@ public class AbstractNamedEntity extends AbstractBaseEntity {
         this.name = name;
     }
 
+    @Override
+    public String toString() {
+        return super.toString() + '(' + name + ')';
+    }
 }

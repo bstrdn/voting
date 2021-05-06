@@ -1,3 +1,10 @@
+#Voting system for deciding where to have lunch.
+
+
+описать назначение
+
+описать стек REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend
+
 ## Features
 •	Admin can input a restaurant and it's lunch menu of the day
  `POST /rest/restaurant/admin/add`
@@ -5,6 +12,7 @@
  `POST /rest/restaurant/admin/add/setmenu`
 •	Users can vote on which restaurant they want to have lunch at (Only one vote counted per user)
  `POST /rest/restaurant/{id}`
+ 
 
 ## Curl samples
 

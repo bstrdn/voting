@@ -7,19 +7,29 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import ru.bstrdn.voting.model.User;
+import ru.bstrdn.voting.repository.CrudUserRepository;
+import ru.bstrdn.voting.security.UserDetailsImpl;
+
+import java.util.Optional;
 
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Qualifier("myUserDetailsService")
     @Autowired
-    MyUserDetailsService userDetailsService;
+    CrudUserRepository userRepository;
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService);
+        auth.userDetailsService(s -> {
+            Optional<User> user = userRepository.findByEmail(s);
+            user.orElseThrow(() -> new UsernameNotFoundException("Not found: " + s));
+            return user.map(UserDetailsImpl::new).get();
+        });
+//        auth.userDetailsService(userDetailsService);
     }
 
     @Override

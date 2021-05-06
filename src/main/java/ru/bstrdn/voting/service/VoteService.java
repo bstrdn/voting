@@ -2,7 +2,7 @@ package ru.bstrdn.voting.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.bstrdn.voting.config.MyUserDetails;
+import org.springframework.transaction.annotation.Transactional;
 import ru.bstrdn.voting.model.Restaurant;
 import ru.bstrdn.voting.model.User;
 import ru.bstrdn.voting.model.Vote;
@@ -16,28 +16,30 @@ import java.util.Date;
 import java.util.Objects;
 
 @Service
-public class UserService {
+public class VoteService {
+    private static final int BORDER_TIME = 39600;
 
     @Autowired
-    CrudVoteRepository voteRepository;
+    private CrudVoteRepository voteRepository;
     @Autowired
-    CrudRestaurantRepository restaurantRepository;
+    private CrudRestaurantRepository restaurantRepository;
 
-    public Vote toVote(int id, MyUserDetails userDetails) {
-
+    @Transactional
+    public Vote toVote(int id, User user) {
         Restaurant restaurant = restaurantRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(id, "Restaurant not found"));
 
         LocalTime localTime = LocalTime.now();
-        User user = userDetails.getUser();
         Vote todayVote = voteRepository.getTodayVote(user.getId());
 
         if (Objects.isNull(todayVote)) {
             return voteRepository.save(new Vote(user, restaurant));
-        } else if (localTime.toSecondOfDay() < 39600) {
-            todayVote.setRestaurant(restaurant);
-            todayVote.setVoted(new Date());
-            return voteRepository.save(todayVote);
+        } else {
+            if (localTime.toSecondOfDay() < BORDER_TIME) {
+                todayVote.setRestaurant(restaurant);
+                todayVote.setVoted(new Date());
+                return voteRepository.save(todayVote);
+            }
         }
         throw new IncorrectDataException("Already voted");
     }

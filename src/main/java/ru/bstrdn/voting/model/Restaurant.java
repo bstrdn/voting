@@ -1,10 +1,9 @@
 package ru.bstrdn.voting.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,13 +12,14 @@ import java.util.List;
 
 @Entity
 @Data
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 public class Restaurant extends AbstractNamedEntity {
 
-    @Getter
-    @Setter
+    @ToString.Exclude
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
     @JsonManagedReference
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Dish> dishes;
 
     public Restaurant(Integer id) {
@@ -31,3 +31,4 @@ public class Restaurant extends AbstractNamedEntity {
         this.dishes = dishes;
     }
 }
+
