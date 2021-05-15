@@ -22,56 +22,57 @@ import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
 
-@RestController
-@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+//@RestController
+//@RequestMapping(value = AdminRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 @Slf4j
 public class AdminRestController {
-    static final String REST_URL = "/rest/restaurant/admin";
-
-    @Autowired
-    CrudDishRepository dishRepository;
-    @Autowired
-    CrudRestaurantRepository restaurantRepository;
-
-    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
-        // TODO: 05.05.2021 refactoring log
-        log.info("create");
-        if (result.hasErrors()) {
-            StringBuilder e = new StringBuilder();
-            for (ObjectError err : result.getAllErrors()) {
-                e.append(err.getDefaultMessage() + ". ");
-            }
-            throw new NotFoundException(404, e.toString());
-        }
-        Restaurant created = restaurantRepository.save(restaurant);
-        List<Dish> dishList = restaurant.getDishes();
-        dishList.forEach(s -> s.setRestaurant(created));
-        dishRepository.saveAll(dishList);
-        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(REST_URL + "/{id}")
-                .buildAndExpand(created.getId()).toUri();
-        return ResponseEntity.created(uriOfNewResource).body(created);
-    }
-
-    @CacheEvict(cacheNames = "restaurant", allEntries = true)
-    @PostMapping(value = "/setmenu", consumes = MediaType.APPLICATION_JSON_VALUE)
-    @ResponseStatus(HttpStatus.CREATED)
-    public List<Dish> setMenu(@Valid @RequestBody ValidList<Dish> menu, BindingResult result) {
-        log.info("set menu");
-
-        if (result.hasErrors()) {
-            StringBuilder e = new StringBuilder();
-            for (ObjectError err : result.getAllErrors()) {
-                e.append(err.getDefaultMessage() + ". ");
-            }
-            throw new IncorrectDataException(e.toString());
-        }
-        try {
-            List<Dish> dishList = dishRepository.saveAll(menu);
-            return dishList;
-        } catch (Exception e) {
-            throw new NotFoundException(404, "Restaurant not found");
-        }
-    }
+//    static final String REST_URL = "/rest/restaurant/admin";
+//
+//    @Autowired
+//    CrudDishRepository dishRepository;
+//    @Autowired
+//    CrudRestaurantRepository restaurantRepository;
+//
+//    @CacheEvict(cacheNames = "restaurant", allEntries = true)
+//    @PostMapping(value = "/add", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<Restaurant> create(@Valid @RequestBody Restaurant restaurant, BindingResult result) {
+//        // TODO: 05.05.2021 refactoring log
+//        log.info("create");
+//        if (result.hasErrors()) {
+//            StringBuilder e = new StringBuilder();
+//            for (ObjectError err : result.getAllErrors()) {
+//                e.append(err.getDefaultMessage() + ". ");
+//            }
+//            throw new NotFoundException(404, e.toString());
+//        }
+//        Restaurant created = restaurantRepository.save(restaurant);
+//        List<Dish> dishList = restaurant.getDishes();
+//        dishList.forEach(s -> s.setRestaurant(created));
+//        dishRepository.saveAll(dishList);
+//        URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
+//                .path(REST_URL + "/{id}")
+//                .buildAndExpand(created.getId()).toUri();
+//        return ResponseEntity.created(uriOfNewResource).body(created);
+//    }
+//
+////    @CacheEvict(cacheNames = "restaurant", allEntries = true)
+//    @PostMapping(value = "/setmenu", consumes = MediaType.APPLICATION_JSON_VALUE)
+//    @ResponseStatus(HttpStatus.CREATED)
+//    public List<Dish> setMenu(@Valid @RequestBody ValidList<Dish> menu, BindingResult result) {
+//        log.info("set menu");
+//
+//        if (result.hasErrors()) {
+//            StringBuilder e = new StringBuilder();
+//            for (ObjectError err : result.getAllErrors()) {
+//                e.append(err.getDefaultMessage() + ". ");
+//            }
+//            throw new IncorrectDataException(e.toString());
+//        }
+//        try {
+//            List<Dish> dishList = dishRepository.saveAll(menu);
+//            return dishList;
+//        } catch (Exception e) {
+//            throw new NotFoundException(404, "Restaurant not found");
+//        }
+//    }
 }

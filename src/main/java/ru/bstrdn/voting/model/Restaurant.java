@@ -1,5 +1,6 @@
 package ru.bstrdn.voting.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import org.hibernate.annotations.OnDelete;
@@ -18,7 +19,8 @@ public class Restaurant extends AbstractNamedEntity {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "restaurant", fetch = FetchType.LAZY)
-    @JsonManagedReference
+//    @JsonManagedReference
+    @JsonIgnore
     @OnDelete(action = OnDeleteAction.CASCADE)
     private List<Dish> dishes;
 

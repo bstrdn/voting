@@ -1,9 +1,7 @@
 #Voting system for deciding where to have lunch.
+This system is a REST API without frontend, which allows the user to choose the best restaurant based on a vote.
 
-
-описать назначение
-
-описать стек REST API using Hibernate/Spring/SpringMVC (or Spring-Boot) without frontend
+Technology stack: Java 15/Hibernate/Spring-Boot/H2 Database.
 
 ## Features
 •	Admin can input a restaurant and it's lunch menu of the day

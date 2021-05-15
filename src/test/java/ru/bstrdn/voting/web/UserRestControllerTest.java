@@ -18,7 +18,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class UserRestControllerTest {
 
-    private static final String REST_URL = UserRestController.REST_URL + '/';
+    private static final String REST_URL = RestaurantRestController.REST_URL + '/';
     private static final String RESTAURANT_ID = "1007";
     private static final UsernamePasswordAuthenticationToken user = new UsernamePasswordAuthenticationToken("user0@ya.ru", "p");
 
