@@ -36,7 +36,7 @@ CREATE TABLE dish
 (
     id   INTEGER DEFAULT nextval('global_seq') PRIMARY KEY,
     name          VARCHAR(100)                            NOT NULL,
-    added         TIMESTAMP default NOW()                 NOT NULL,
+    added         DATE default NOW()                 NOT NULL,
     price         INTEGER                                 NOT NULL,
     restaurant_id INTEGER                                 NOT NULL,
     CONSTRAINT restaurant_id_idx

@@ -1,16 +1,13 @@
 package ru.bstrdn.voting.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 @Entity
@@ -24,12 +21,11 @@ public class Dish extends AbstractNamedEntity {
     private int price;
 
     @Setter(AccessLevel.NONE)
-    @Column(name = "added", nullable = false, columnDefinition = "timestamp default now()")
+    @Column(name = "added", nullable = false, columnDefinition = "date default now()")
     private Date added = new Date();
 
-    @NotNull(message = "Error: There must be a restaurant")
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)
-    @JsonBackReference
+    @JsonIgnore
     private Restaurant restaurant;
 }

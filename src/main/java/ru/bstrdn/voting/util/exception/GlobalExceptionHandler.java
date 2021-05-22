@@ -13,14 +13,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(NotFoundException.class)
     public ResponseEntity<Response> notFoundException(NotFoundException e) {
         log.debug("{} (id: {})", e.getMessage(), e.getIdResource());
-        Response response = new Response(e.getIdResource(), e.getMessage());
+        Response response = new Response(e.getMessage());
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(IncorrectDataException.class)
     public ResponseEntity<Response> incorrectDataException(IncorrectDataException e) {
         log.debug(e.getMessage());
-        Response response = new Response(400, e.getMessage());
-        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        Response response = new Response(e.getMessage());
+        return new ResponseEntity<>(response, HttpStatus.UNPROCESSABLE_ENTITY);
     }
 }
